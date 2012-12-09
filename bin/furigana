@@ -1,47 +1,53 @@
 #!/usr/bin/env ruby
-require 'gli'
-begin # XXX: Remove this begin/rescue before distributing your app
+# -*- coding: utf-8 -*-
 require 'furigana'
-rescue LoadError
-  STDERR.puts "In development, you need to use `bundle exec bin/todo` to run your app"
-  STDERR.puts "At install-time, RubyGems will make sure lib, etc. are in the load path"
-  STDERR.puts "Feel free to remove this message from bin/furigana now"
-  exit 64
+require 'ostruct'
+require 'optparse'
+
+module Furigana
+  class CLI
+    def initialize
+      @settings = OpenStruct.new
+      @settings.format = :text
+    end
+
+    def parse_options
+      OptionParser.new do |opts|
+        opts.banner = "Usage: furigana [options] [file]"
+
+        opts.on("--text", "Add furigana and output text (default)") do
+          @settings.format = :text
+        end
+        opts.on("--html", "Add furigana and output HTML") do
+          @settings.format = :html
+        end
+        opts.on("--json", "Add furigana and output JSON") do
+          @settings.format = :json
+        end
+        opts.on_tail("-h", "--help", "Show this message") do
+          puts opts
+          exit
+        end
+        opts.on_tail("--version", "Show version") do
+          puts Furigana::VERSION
+          exit
+        end
+      end.parse!
+    end
+
+    def start
+      parse_options
+
+      case @settings.format
+      when :text
+        puts Furigana::Formatter::Text.format(Furigana::Parser.new.reading(ARGF.read))
+      when :html
+        puts Furigana::Formatter::HTML.format(Furigana::Parser.new.reading(ARGF.read))
+      when :json
+        puts Furigana::Formatter::JSON.format(Furigana::Parser.new.reading(ARGF.read))
+      end
+    end
+  end
 end
 
-include GLI::App
-
-program_desc 'Describe your application here'
-
-version Furigana::VERSION
-
-desc 'Describe some switch here'
-switch [:s,:switch]
-
-desc 'Describe some flag here'
-default_value 'the default'
-arg_name 'The name of the argument'
-flag [:f,:flagname]
-
-pre do |global,command,options,args|
-  # Pre logic here
-  # Return true to proceed; false to abourt and not call the
-  # chosen command
-  # Use skips_pre before a command to skip this block
-  # on that command only
-  true
-end
-
-post do |global,command,options,args|
-  # Post logic here
-  # Use skips_post before a command to skip this
-  # block on that command only
-end
-
-on_error do |exception|
-  # Error logic here
-  # return false to skip default error handling
-  true
-end
-
-exit run(ARGV)
+Furigana::CLI.new.start

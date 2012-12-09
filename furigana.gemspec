@@ -1,6 +1,6 @@
 # Ensure we require the local version and not one we might have installed already
 require File.join([File.dirname(__FILE__),'lib','furigana','version.rb'])
-spec = Gem::Specification.new do |s| 
+spec = Gem::Specification.new do |s|
   s.name = 'furigana'
   s.version = Furigana::VERSION
   s.author = 'Your Name Here'
@@ -22,8 +22,8 @@ lib/furigana.rb
   s.executables << 'furigana'
   s.add_development_dependency('rake')
   s.add_development_dependency('rdoc')
-  s.add_development_dependency('aruba')
+  s.add_development_dependency('diff-lcs')
   s.add_development_dependency('debugger')
-  s.add_runtime_dependency('gli','2.5.0')
+  s.add_runtime_dependency('diff-lcs')
   s.add_runtime_dependency('redcarpet')
 end
