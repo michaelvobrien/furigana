@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Furigana
   module Formatter
     class Text < Formatter::Base
@@ -11,7 +12,7 @@ module Furigana
               text += if part[yomi].nil?
                         part[element]
                       else
-                        "[%s|%s]" % [part[element], part[yomi]]
+                        "%s【%s】" % [part[element], part[yomi]]
                       end
             end
           end
