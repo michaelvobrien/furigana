@@ -1,0 +1,5 @@
+= furigana
+
+Generate this with
+    furigana rdoc
+After you have described your command line interface
