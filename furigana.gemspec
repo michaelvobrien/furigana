@@ -25,5 +25,4 @@ lib/furigana.rb
   s.add_development_dependency('diff-lcs')
   s.add_development_dependency('debugger')
   s.add_runtime_dependency('diff-lcs')
-  s.add_runtime_dependency('redcarpet')
 end

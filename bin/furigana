@@ -38,13 +38,14 @@ module Furigana
     def start
       parse_options
 
+      input = ARGF.read
       case @settings.format
       when :text
-        puts Furigana::Formatter::Text.format(Furigana::Parser.new.reading(ARGF.read))
+        puts Furigana::Formatter::Text.format(input, Furigana::Parser.new.reading(input))
       when :html
-        puts Furigana::Formatter::HTML.format(Furigana::Parser.new.reading(ARGF.read))
+        puts Furigana::Formatter::HTML.format(input, Furigana::Parser.new.reading(input))
       when :json
-        puts Furigana::Formatter::JSON.format(Furigana::Parser.new.reading(ARGF.read))
+        puts Furigana::Formatter::JSON.format(input, Furigana::Parser.new.reading(input))
       end
     end
   end
