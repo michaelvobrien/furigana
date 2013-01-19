@@ -7,7 +7,11 @@ module Furigana
           surface_form, reading = 0, 1
           new_text = ''
           tokens_enum = tokens.to_enum
-          current_token = tokens_enum.next
+          begin
+            current_token = tokens_enum.next
+          rescue StopIteration
+            current_token = nil
+          end
           substring, pos = "", 0
 
           text.each_char do |char|
