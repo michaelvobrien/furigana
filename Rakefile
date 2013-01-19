@@ -4,9 +4,8 @@ require 'rubygems/package_task'
 require 'rdoc/task'
 
 Rake::RDocTask.new do |rd|
-  rd.main = "README.rdoc"
-  rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
-  rd.title = 'Your application title'
+  rd.rdoc_files.include("lib/**/*.rb","bin/**/*")
+  rd.title = 'Furigana'
 end
 
 spec = eval(File.read('furigana.gemspec'))

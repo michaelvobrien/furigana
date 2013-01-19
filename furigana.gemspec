@@ -3,21 +3,26 @@ require File.join([File.dirname(__FILE__),'lib','furigana','version.rb'])
 spec = Gem::Specification.new do |s|
   s.name = 'furigana'
   s.version = Furigana::VERSION
-  s.author = 'Your Name Here'
-  s.email = 'your@email.address.com'
-  s.homepage = 'http://your.website.com'
+  s.author = "Michael V. O'Brien"
+  s.email = 'michael@michaelvobrien.com'
+  s.homepage = 'https://github.com/michaelvobrien/furigana'
   s.platform = Gem::Platform::RUBY
-  s.summary = 'A description of your project'
-# Add your other files here if you make them
+  s.summary = 'Add furigana to text'
   s.files = %w(
 bin/furigana
-lib/furigana/version.rb
 lib/furigana.rb
+lib/furigana/formatter/base.rb
+lib/furigana/formatter/html.rb
+lib/furigana/formatter/json.rb
+lib/furigana/formatter/text.rb
+lib/furigana/formatters.rb
+lib/furigana/mecab.rb
+lib/furigana/reader.rb
+lib/furigana/version.rb
   )
   s.require_paths << 'lib'
   s.has_rdoc = true
-  s.extra_rdoc_files = ['README.rdoc','furigana.rdoc']
-  s.rdoc_options << '--title' << 'furigana' << '--main' << 'README.rdoc' << '-ri'
+  s.rdoc_options << '--title' << 'furigana' << '-ri'
   s.bindir = 'bin'
   s.executables << 'furigana'
   s.add_development_dependency('rake')

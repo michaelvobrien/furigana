@@ -1,6 +1,0 @@
-= furigana
-
-Describe your project here
-
-:include:furigana.rdoc
-
