@@ -27,4 +27,9 @@ class ReaderTest < Test::Unit::TestCase
     expected = [['日本語', 'にほんご'], ['勉強', 'べんきょう']]
     assert_equal expected, Furigana::Reader.new.reading(text)
   end
+  test "バルト海の新しい読み物。" do
+    text = "バルト海の新しい読み物。"
+    expected = [["海", "かい"], ["新", "あたら"], ["読", "よ"], ["物", "もの"]]
+    assert_equal expected, Furigana::Reader.new.reading(text)
+  end
 end

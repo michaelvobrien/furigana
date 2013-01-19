@@ -19,6 +19,17 @@ class MecabTest < Test::Unit::TestCase
     ]
     assert_equal expected, Furigana::Mecab.tokenize(text)
   end
+  test "tokenize バルト海の新しい読み物。" do
+    text = "バルト海の新しい読み物。"
+    expected = [
+      {:surface_form => "バルト海", :reading => "バルトカイ"},
+      {:surface_form => "の", :reading => "ノ"},
+      {:surface_form => "新しい", :reading => "アタラシイ"},
+      {:surface_form => "読み物", :reading => "ヨミモノ"},
+      {:surface_form => "。", :reading => "。"}
+    ]
+    assert_equal expected, Furigana::Mecab.tokenize(text)
+  end
   test "paragraph" do
     text = <<-END
 私は2年前に日本に移住しました。カメラで写真を撮りました。私は食べ物が好
