@@ -4,5 +4,5 @@ require 'json'
 
 require 'furigana/version'
 require 'furigana/mecab'
-require 'furigana/parser'
+require 'furigana/reader'
 require 'furigana/formatters'

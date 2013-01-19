@@ -3,8 +3,8 @@ module Furigana
   module Formatter
     class Text < Formatter::Base
       class << self
-        def replacement(original, yomi)
-          "%s【%s】" % [original, yomi]
+        def replacement(surface_form, reading)
+          "%s【%s】" % [surface_form, reading]
         end
       end
     end

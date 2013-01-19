@@ -4,7 +4,7 @@ module Furigana
     class Base
       class << self
         def format(text, tokens)
-          element, yomi = 0, 1
+          surface_form, reading = 0, 1
           new_text = ''
           tokens_enum = tokens.to_enum
           current_token = tokens_enum.next
@@ -13,9 +13,9 @@ module Furigana
           text.each_char do |char|
             if current_token
               substring += char
-              if char == current_token[element][pos]
-                if pos == current_token[element].length-1
-                  new_text += replacement(current_token[element], current_token[yomi])
+              if char == current_token[surface_form][pos]
+                if pos == current_token[surface_form].length-1
+                  new_text += replacement(current_token[surface_form], current_token[reading])
                   begin
                     current_token = tokens_enum.next
                   rescue StopIteration

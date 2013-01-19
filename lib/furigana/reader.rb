@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 module Furigana
-  # 読み方 - Yomikata - Reading
-  class Parser
+  class Reader
     def reading(text)
-      Mecab.chasen(text).inject([]) do |list, element|
-        with_furigana = add_furigana(yomi_to_hiragana(element))
-        list.push with_furigana if with_furigana
+      Mecab.tokenize(text).inject([]) do |list, token|
+        with_furigana = add_furigana(yomi_to_hiragana(token))
+        list.push(with_furigana) if with_furigana
         list
       end
     end
 
     private
 
-    def yomi_to_hiragana(element)
-      element[:yomi] = choose_yomi(element[:element], element[:yomi])
-      element
+    def yomi_to_hiragana(token)
+      token[:reading] = choose_reading(token[:surface_form], token[:reading])
+      token
     end
 
     def k2h(k)
@@ -26,33 +25,25 @@ module Furigana
       /^[ぁ-んァ-ンー]+$/.match(str)
     end
 
-    def number?(str)
-      /^[0-9０-９]+$/.match(str)
-    end
-
-    def choose_yomi(element, yomi)
-      !kana?(element) ?  k2h(yomi) : element
+    def choose_reading(surface_form, reading)
+      !kana?(surface_form) ? k2h(reading) : surface_form
     end
 
     def sdiff(first, second)
       Diff::LCS.sdiff(first, second)
     end
 
-    def sequence(element)
-      element.split('')
+    def diff_token_surface_form_and_reading(token)
+      sdiff(token[:surface_form], token[:reading])
     end
 
-    def diff_element(element)
-      sdiff(sequence(element[:element]), sequence(element[:yomi]))
-    end
-
-    def add_furigana(element)
+    def add_furigana(token)
       states = { kanji_and_yomi: '!', yomi: '+', kana: '=' }
       kanji, yomi = 0, 1
 
       list = nil
       on_kanji = false
-      diff_element(element).each do |part|
+      diff_token_surface_form_and_reading(token).each do |part|
         case part.action
         when states[:kanji_and_yomi]
           list = ['',''] unless on_kanji

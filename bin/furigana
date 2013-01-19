@@ -1,11 +1,14 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 require 'furigana'
+require 'singleton'
 require 'ostruct'
 require 'optparse'
 
 module Furigana
   class CLI
+    include Singleton
+
     def initialize
       @settings = OpenStruct.new
       @settings.format = :text
@@ -41,14 +44,14 @@ module Furigana
       input = ARGF.read
       case @settings.format
       when :text
-        puts Furigana::Formatter::Text.format(input, Furigana::Parser.new.reading(input))
+        puts Formatter::Text.format(input, Reader.new.reading(input))
       when :html
-        puts Furigana::Formatter::HTML.format(input, Furigana::Parser.new.reading(input))
+        puts Formatter::HTML.format(input, Reader.new.reading(input))
       when :json
-        puts Furigana::Formatter::JSON.format(input, Furigana::Parser.new.reading(input))
+        puts Formatter::JSON.format(input, Reader.new.reading(input))
       end
     end
   end
 end
 
-Furigana::CLI.new.start
+Furigana::CLI.instance.start

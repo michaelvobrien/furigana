@@ -2,22 +2,22 @@
 require 'test_helper'
 
 class MecabTest < Test::Unit::TestCase
-  test "chasen 食べる" do
+  test "tokenize 食べる" do
     text = '食べる'
-    expected = [{ element: "食べる", yomi: "タベル" }]
-    assert_equal expected, Furigana::Mecab.chasen(text)
+    expected = [{ surface_form: "食べる", reading: "タベル" }]
+    assert_equal expected, Furigana::Mecab.tokenize(text)
   end
-  test "chasen alphanumeric with 食べる" do
+  test "tokenize alphanumeric with 食べる" do
     text = 'This is "食べる" 123'
     expected = [
-      {:element=>"This", :yomi=>"This"},
-      {:element=>"is", :yomi=>"is"},
-      {:element=>"\"", :yomi=>"\""},
-      {:element=>"食べる", :yomi=>"タベル"},
-      {:element=>"\"", :yomi=>"\""},
-      {:element=>"123", :yomi=>"123"}
+      {:surface_form => "This", :reading => "This"},
+      {:surface_form => "is", :reading => "is"},
+      {:surface_form => "\"", :reading => "\""},
+      {:surface_form => "食べる", :reading => "タベル"},
+      {:surface_form => "\"", :reading => "\""},
+      {:surface_form => "123", :reading => "123"}
     ]
-    assert_equal expected, Furigana::Mecab.chasen(text)
+    assert_equal expected, Furigana::Mecab.tokenize(text)
   end
   test "paragraph" do
     text = <<-END
@@ -25,39 +25,39 @@ class MecabTest < Test::Unit::TestCase
 きです。SNS１２３567。
 END
     expected = [
-      {:element=>"私", :yomi=>"ワタシ"},
-      {:element=>"は", :yomi=>"ハ"},
-      {:element=>"2", :yomi=>"2"},
-      {:element=>"年", :yomi=>"ネン"},
-      {:element=>"前", :yomi=>"マエ"},
-      {:element=>"に", :yomi=>"ニ"},
-      {:element=>"日本", :yomi=>"ニッポン"},
-      {:element=>"に", :yomi=>"ニ"},
-      {:element=>"移住", :yomi=>"イジュウ"},
-      {:element=>"し", :yomi=>"シ"},
-      {:element=>"まし", :yomi=>"マシ"},
-      {:element=>"た", :yomi=>"タ"},
-      {:element=>"。", :yomi=>"。"},
-      {:element=>"カメラ", :yomi=>"カメラ"},
-      {:element=>"で", :yomi=>"デ"},
-      {:element=>"写真", :yomi=>"シャシン"},
-      {:element=>"を", :yomi=>"ヲ"},
-      {:element=>"撮り", :yomi=>"トリ"},
-      {:element=>"まし", :yomi=>"マシ"},
-      {:element=>"た", :yomi=>"タ"},
-      {:element=>"。", :yomi=>"。"},
-      {:element=>"私", :yomi=>"ワタシ"},
-      {:element=>"は", :yomi=>"ハ"},
-      {:element=>"食べ物", :yomi=>"タベモノ"},
-      {:element=>"が", :yomi=>"ガ"},
-      {:element=>"好き", :yomi=>"スキ"},
-      {:element=>"です", :yomi=>"デス"},
-      {:element=>"。", :yomi=>"。"},
-      {:element=>"SNS", :yomi=>"SNS"},
-      {:element=>"１", :yomi=>"イチ"},
-      {:element=>"２３567", :yomi=>"２３567"},
-      {:element=>"。", :yomi=>"。"}
+      {:surface_form => "私", :reading => "ワタシ"},
+      {:surface_form => "は", :reading => "ハ"},
+      {:surface_form => "2", :reading => "2"},
+      {:surface_form => "年", :reading => "ネン"},
+      {:surface_form => "前", :reading => "マエ"},
+      {:surface_form => "に", :reading => "ニ"},
+      {:surface_form => "日本", :reading => "ニッポン"},
+      {:surface_form => "に", :reading => "ニ"},
+      {:surface_form => "移住", :reading => "イジュウ"},
+      {:surface_form => "し", :reading => "シ"},
+      {:surface_form => "まし", :reading => "マシ"},
+      {:surface_form => "た", :reading => "タ"},
+      {:surface_form => "。", :reading => "。"},
+      {:surface_form => "カメラ", :reading => "カメラ"},
+      {:surface_form => "で", :reading => "デ"},
+      {:surface_form => "写真", :reading => "シャシン"},
+      {:surface_form => "を", :reading => "ヲ"},
+      {:surface_form => "撮り", :reading => "トリ"},
+      {:surface_form => "まし", :reading => "マシ"},
+      {:surface_form => "た", :reading => "タ"},
+      {:surface_form => "。", :reading => "。"},
+      {:surface_form => "私", :reading => "ワタシ"},
+      {:surface_form => "は", :reading => "ハ"},
+      {:surface_form => "食べ物", :reading => "タベモノ"},
+      {:surface_form => "が", :reading => "ガ"},
+      {:surface_form => "好き", :reading => "スキ"},
+      {:surface_form => "です", :reading => "デス"},
+      {:surface_form => "。", :reading => "。"},
+      {:surface_form => "SNS", :reading => "SNS"},
+      {:surface_form => "１", :reading => "イチ"},
+      {:surface_form => "２３567", :reading => "２３567"},
+      {:surface_form => "。", :reading => "。"}
     ]
-    assert_equal expected, Furigana::Mecab.chasen(text)
+    assert_equal expected, Furigana::Mecab.tokenize(text)
   end
 end

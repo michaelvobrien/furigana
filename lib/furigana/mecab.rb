@@ -8,15 +8,15 @@ module Furigana
         text.tr("\n", "")
       end
 
-      def chasen(text)
-        element, yomi = 0, 1
+      def tokenize(text)
+        surface_form, reading = 0, 1
         stdout, stderr, status = Open3.capture3("mecab -Ochasen", :stdin_data => sanitize_text(text))
         stdout.split("\n").inject([]) do |output, line|
           columns = line.split("\t")
           output << {
-            :element => columns[element],
-            :yomi    => columns[yomi]
-          } if columns[element] != 'EOS'
+            :surface_form => columns[surface_form],
+            :reading      => columns[reading]
+          } if columns[surface_form] != 'EOS'
           output
         end
       end
