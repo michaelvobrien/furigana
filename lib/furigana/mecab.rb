@@ -11,7 +11,16 @@ module Furigana
       def tokenize(text)
         surface_form, reading = 0, 1
         stdout, stderr, status = Open3.capture3("mecab -Ochasen", :stdin_data => sanitize_text(text))
-        stdout.split("\n").inject([]) do |output, line|
+
+        # Avoid `ArgumentError - invalid byte sequence in UTF-8`
+        lines = if stdout.valid_encoding?
+                  stdout.split("\n")
+                else
+                  stdout.encode!("UTF-8", "UTF-8", :invalid => :replace, :undef => :replace, :replace => "�")
+                  stdout.split("\n")
+                end
+
+        lines.inject([]) do |output, line|
           columns = line.split("\t")
           output << {
             :surface_form => columns[surface_form],
