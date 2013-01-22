@@ -37,4 +37,9 @@ class TextFormatterTest < Test::Unit::TestCase
     expected = "no kanji"
     assert_equal expected, Furigana::Formatter::Text.format(text, Furigana::Reader.new.reading(text))
   end
+  test "国営通信は２０日" do
+    text = "国営通信は２０日"
+    expected = "国営【こくえい】通信【つうしん】は２０日【にち】"
+    assert_equal expected, Furigana::Formatter::Text.format(text, Furigana::Reader.new.reading(text))
+  end
 end
