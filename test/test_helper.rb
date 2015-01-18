@@ -1,13 +1,7 @@
 require 'test/unit'
-require 'debugger'
 require 'furigana'
 
-# Add test libraries you want to use here, e.g. mocha
-
 class Test::Unit::TestCase
-
-  # Add global extensions to the test case class here
-
   # Taken from `active_support/testing/declarative.rb`
   def self.test(name, &block)
     test_name = "test_#{name.gsub(/\s+/,'_')}".to_sym

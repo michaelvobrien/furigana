@@ -5,7 +5,7 @@ module Furigana
   class Mecab
     class << self
       def sanitize_text(text)
-        text.tr("\n", "")
+        format("%s\n", text.tr("\n", ""))
       end
 
       def tokenize(text)

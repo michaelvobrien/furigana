@@ -27,7 +27,5 @@ lib/furigana/version.rb
   s.executables << 'furigana'
   s.add_development_dependency('rake')
   s.add_development_dependency('rdoc')
-  s.add_development_dependency('diff-lcs')
-  s.add_development_dependency('debugger')
   s.add_runtime_dependency('diff-lcs')
 end
