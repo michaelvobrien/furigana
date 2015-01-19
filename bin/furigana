@@ -24,6 +24,9 @@ module Furigana
         opts.on("--html", "Add furigana and output HTML") do
           @settings.format = :html
         end
+        opts.on("--yomikata", "Output yomikata only") do
+          @settings.format = :yomikata
+        end
         opts.on("--json", "Add furigana and output JSON") do
           @settings.format = :json
         end
@@ -47,6 +50,8 @@ module Furigana
         puts Formatter::Text.format(input, Reader.new.reading(input))
       when :html
         puts Formatter::HTML.format(input, Reader.new.reading(input))
+      when :yomikata
+        puts Formatter::Yomikata.format(input, Reader.new.reading(input))
       when :json
         puts Formatter::JSON.format(input, Reader.new.reading(input))
       end

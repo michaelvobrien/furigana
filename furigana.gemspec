@@ -13,6 +13,7 @@ bin/furigana
 lib/furigana.rb
 lib/furigana/formatter/base.rb
 lib/furigana/formatter/html.rb
+lib/furigana/formatter/yomikata.rb
 lib/furigana/formatter/json.rb
 lib/furigana/formatter/text.rb
 lib/furigana/formatters.rb
