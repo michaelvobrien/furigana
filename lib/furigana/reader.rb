@@ -5,8 +5,8 @@ module Furigana
   class Reader
     def reading(text)
       Mecab.tokenize(text).reduce([]) do |list, token|
-        with_furigana = add_furigana(token)
-        list += with_furigana if with_furigana
+        with_reading = add_reading(token)
+        list += with_reading if with_reading
         list
       end
     end
@@ -22,11 +22,12 @@ module Furigana
       Diff::LCS.sdiff(k2h(token[:surface_form]), k2h(token[:reading]))
     end
 
-    def add_furigana(token)
+    def add_reading(token)
       states = { kanji_and_yomi: '!', yomi: '+', kana: '=' }
       kanji, yomi = 0, 1
 
       list = []
+
       if /\p{Han}/.match(token[:surface_form])
         on_kanji = false
         diff_token_surface_form_and_reading(token).each do |part|
@@ -43,6 +44,7 @@ module Furigana
           end
         end
       end
+
       list
     end
   end
