@@ -1,8 +1,10 @@
-# -*- coding: utf-8 -*-
+require 'diff/lcs'
+require 'nkf'
+
 module Furigana
   class Reader
     def reading(text)
-      Mecab.tokenize(text).inject([]) do |list, token|
+      Mecab.tokenize(text).reduce([]) do |list, token|
         with_furigana = add_furigana(token)
         list += with_furigana if with_furigana
         list

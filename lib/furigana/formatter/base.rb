@@ -1,44 +1,55 @@
-# -*- coding: utf-8 -*-
 module Furigana
   module Formatter
     class Base
-      class << self
-        def format(text, tokens)
-          surface_form, reading = 0, 1
-          new_text = ''
-          tokens_enum = tokens.to_enum
-          begin
-            current_token = tokens_enum.next
-          rescue StopIteration
-            current_token = nil
-          end
-          substring, pos = "", 0
+      SURFACE_FORM, READING = 0, 1
 
-          text.each_char do |char|
-            if current_token
-              substring += char
-              if char == current_token[surface_form][pos]
-                if pos == current_token[surface_form].length-1
-                  new_text += replacement(current_token[surface_form], current_token[reading])
-                  begin
-                    current_token = tokens_enum.next
-                  rescue StopIteration
-                    current_token = nil
-                  end
-                  substring, pos = "", 0
-                else
-                  pos += 1
-                end
-              else # not a match
-                new_text += substring
-                substring, pos = "", 0
-              end
-            else # no more tokens
-              new_text += char
-            end
+      def self.format(text, kanji_tokens)
+        kanji_tokens_enum = kanji_tokens.to_enum
+
+        new_text = ""
+        current_token = next_token(kanji_tokens_enum)
+        substring, kanji_char_pos = "", 0
+
+        text.each_char do |char|
+          # no more kanji tokens
+          if current_token.nil?
+            new_text += char
+            next
           end
-          new_text
+
+          substring += char
+
+          # not a kanji group match
+          unless char == current_token[SURFACE_FORM][kanji_char_pos]
+            new_text += substring
+            substring, kanji_char_pos = "", 0
+            next
+          end
+
+          if at_end_of_kanji_group?(kanji_char_pos, current_token)
+            # a kanji group match; replace kanji group with formatting
+            new_text += replacement(current_token[SURFACE_FORM], current_token[READING])
+            current_token = next_token(kanji_tokens_enum)
+            substring, kanji_char_pos = "", 0
+          else
+            # kanji token pos advances with char pos
+            kanji_char_pos += 1
+          end
         end
+
+        new_text
+      end
+
+      private
+
+      def self.at_end_of_kanji_group?(kanji_char_pos, current_token)
+        kanji_char_pos == (current_token[SURFACE_FORM].length - 1)
+      end
+
+      def self.next_token(kanji_tokens_enum)
+        kanji_tokens_enum.next
+      rescue StopIteration
+        nil
       end
     end
   end

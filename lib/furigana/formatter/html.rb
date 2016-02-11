@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 module Furigana
   module Formatter
     class HTML < Formatter::Base

@@ -1,3 +1,5 @@
+require 'json'
+
 module Furigana
   module Formatter
     class JSON < Formatter::Base

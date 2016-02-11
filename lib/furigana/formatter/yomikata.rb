@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+require 'nkf'
+
 module Furigana
   module Formatter
     class Yomikata < Formatter::Base

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 module Furigana
   module Formatter
     class Text < Formatter::Base
