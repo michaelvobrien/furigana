@@ -3,10 +3,8 @@ require 'json'
 module Furigana
   module Formatter
     class JSON < Formatter::Base
-      class << self
-        def format(text, tokens)
-          tokens.to_json
-        end
+      def render
+        @kanji_tokens.to_json
       end
     end
   end
