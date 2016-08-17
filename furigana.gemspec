@@ -17,6 +17,7 @@ lib/furigana/formatter/yomikata.rb
 lib/furigana/formatter/json.rb
 lib/furigana/formatter/text.rb
 lib/furigana/formatters.rb
+lib/furigana/cli.rb
 lib/furigana/mecab.rb
 lib/furigana/reader.rb
 lib/furigana/version.rb
