@@ -26,7 +26,11 @@ lib/furigana/version.rb
   s.rdoc_options << '--title' << 'furigana' << '-ri'
   s.bindir = 'bin'
   s.executables << 'furigana'
+
+  s.add_runtime_dependency('diff-lcs')
+
   s.add_development_dependency('rake')
   s.add_development_dependency('rdoc')
-  s.add_runtime_dependency('diff-lcs')
+  s.add_development_dependency('pry')
+  s.add_development_dependency('pry-doc')
 end
